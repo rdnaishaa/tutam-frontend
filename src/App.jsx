@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import Albums from './components/Albums';
 import AlbumDetail from './components/AlbumDetail';
@@ -7,14 +7,18 @@ import NotFound from './components/NotFound';
 import './App.css';
 
 // NavLink component with active state handling
-const NavLink = ({ to, children }) => {
+const NavLink = ({ to, children, onClick }) => {
   const location = useLocation();
   const isActive = location.pathname === to || 
                   (to === '/' && location.pathname === '') ||
                   (to !== '/' && location.pathname.startsWith(to));
   
   return (
-    <Link to={to} className={`nav-link ${isActive ? 'active' : ''}`}>
+    <Link 
+      to={to} 
+      className={`nav-link ${isActive ? 'active' : ''}`}
+      onClick={onClick}
+    >
       {children}
     </Link>
   );
@@ -23,22 +27,75 @@ const NavLink = ({ to, children }) => {
 // Navigation component with animated hamburger menu for mobile
 const Navigation = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navRef = useRef(null);
   
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target) && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+
+    // Close menu when user clicks anywhere on the page
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [menuOpen]);
+
+  // Add escape key functionality to close menu
+  useEffect(() => {
+    const handleEscKey = (event) => {
+      if (event.key === 'Escape' && menuOpen) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscKey);
+    };
+  }, [menuOpen]);
+
   return (
-    <nav className="main-nav">
-      <button className={`hamburger ${menuOpen ? 'open' : ''}`} onClick={toggleMenu}>
+    <nav className="main-nav" ref={navRef}>
+      <button 
+        className={`hamburger ${menuOpen ? 'open' : ''}`} 
+        onClick={toggleMenu}
+        aria-label="Toggle navigation menu"
+        aria-expanded={menuOpen}
+      >
         <span></span>
         <span></span>
         <span></span>
       </button>
       
+      {/* Add overlay for mobile */}
+      {menuOpen && (
+        <div className="nav-overlay" onClick={closeMenu}></div>
+      )}
+      
       <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
-        <NavLink to="/">Gallery</NavLink>
-        <NavLink to="/create">Create Album</NavLink>
+        <NavLink to="/" onClick={closeMenu}>Gallery</NavLink>
+        <NavLink to="/create" onClick={closeMenu}>Create Album</NavLink>
+        {/* Close button visible only on mobile */}
+        <button className="mobile-close-button" onClick={closeMenu} aria-label="Close menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
       </div>
     </nav>
   );
@@ -63,11 +120,29 @@ function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
   
+  // Use preferred color scheme from system
+  useEffect(() => {
+    // Check if user has a preference in localStorage
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.body.className = savedTheme;
+    } else {
+      // Check system preference
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
+        setTheme('dark');
+        document.body.className = 'dark';
+      }
+    }
+  }, []);
+  
   // Toggle between light and dark themes
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
     setTheme(newTheme);
     document.body.className = newTheme;
+    localStorage.setItem('theme', newTheme);
   };
 
   return (
@@ -89,7 +164,11 @@ function App() {
             </div>
             
             <div className="header-actions">
-              <button className="theme-toggle" onClick={toggleTheme}>
+              <button 
+                className="theme-toggle" 
+                onClick={toggleTheme}
+                aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              >
                 {theme === 'light' ? (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />

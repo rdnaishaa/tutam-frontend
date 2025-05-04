@@ -1,135 +1,458 @@
+/* Album.css */
 .albums-container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-  }
-  
-  .albums-container h2 {
-    margin-bottom: 1.5rem;
-    color: #3a6e7a;
-    border-bottom: 2px solid #e3f0f2;
-    padding-bottom: 0.75rem;
-    font-size: 1.8rem;
-    letter-spacing: 0.5px;
-  }
-  
-  .albums-grid {
+    padding: 30px;
+    background: linear-gradient(120deg, #f8fbfb 0%, #edf6f7 100%);
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.albums-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Decorative elements */
+.albums-container::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76,159,163,0.1) 0%, rgba(76,159,163,0) 70%);
+    z-index: 0;
+}
+
+.albums-container::after {
+    content: "";
+    position: absolute;
+    bottom: -30px;
+    left: -30px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(76,159,163,0.08) 0%, rgba(76,159,163,0) 70%);
+    z-index: 0;
+}
+
+.albums-container h2 {
+    margin-bottom: 1.8rem;
+    color: #2a6e7a;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+    font-weight: 700;
+    padding-bottom: 15px;
+}
+
+.albums-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 1.8rem;
-  }
-  
-  .album-card {
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    padding: 1.8rem;
-    transition: transform 0.25s, box-shadow 0.25s;
-    border: 1px solid #f0f7f8;
-  }
-  
-  .album-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-  }
-  
-  .album-card h3 {
-    margin-bottom: 0.8rem;
-    color: #2c5d68;
-    font-size: 1.3rem;
-    font-weight: 600;
-  }
-  
-  .album-card p {
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.album-card {
+    background: linear-gradient(145deg, var(--white), var(--background-light));
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(109, 40, 217, 0.1);
+    padding: 2rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: none;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(5px);
+}
+
+.album-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #4c9fa3, #6db5b8);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease-out;
+}
+
+.album-card:hover {
+    transform: translateY(-12px) rotate(1deg);
+    box-shadow: 0 15px 30px rgba(76, 159, 163, 0.2);
+}
+
+.album-card:hover::before {
+    transform: scaleX(1);
+}
+
+.album-card h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+}
+
+.album-card p {
     color: #5f7173;
-    margin-bottom: 1.2rem;
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
-  
-  .album-status {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+.album-status {
     font-size: 0.9rem;
-    color: #5f7173;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 5px;
-  }
-  
-  .status-public {
-    color: #3c9d9b;
-    font-weight: 500;
-  }
-  
-  .status-private {
-    color: #b0905e;
-    font-weight: 500;
-  }
-  
-  .album-actions {
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.album-status::before {
+    content: "•";
+    font-size: 1.5rem;
+    line-height: 0;
+    position: relative;
+    top: 2px;
+}
+
+.status-public {
+    color: var(--success-color);
+    font-weight: 600;
+    position: relative;
+}
+
+.status-public::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(42, 157, 155, 0.3);
+    border-radius: 2px;
+}
+
+.status-public::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #2a9d9b;
+    border-radius: 50%;
+    margin-right: 5px;
+    position: relative;
+    top: -1px;
+}
+
+.status-private {
+    color: var(--warning-color);
+    font-weight: 600;
+    position: relative;
+}
+
+.status-private::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgba(176, 144, 94, 0.3);
+    border-radius: 2px;
+}
+
+.status-private::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #b0905e;
+    border-radius: 50%;
+    margin-right: 5px;
+    position: relative;
+    top: -1px;
+}
+
+.album-actions {
     display: flex;
     justify-content: space-between;
-    gap: 1rem;
-  }
-  
-  .view-btn, .delete-btn {
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
+    gap: 1.2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.view-btn, .delete-btn {
+    padding: 0.8rem 1.2rem;
+    border-radius: 10px;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
     text-align: center;
     flex: 1;
-  }
-  
-  .view-btn {
-    background-color: #4c9fa3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    letter-spacing: 0.5px;
+}
+
+.view-btn {
+    background: var(--gradient-primary);
     color: white;
-    box-shadow: 0 1px 3px rgba(76, 159, 163, 0.2);
-  }
-  
-  .view-btn:hover {
-    background-color: #3a8e92;
-  }
-  
-  .delete-btn {
-    background-color: #f0f0f0;
+    box-shadow: 0 5px 15px rgba(76, 159, 163, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.view-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    transition: all 0.6s ease;
+}
+
+.view-btn:hover::before {
+    left: 100%;
+}
+
+.view-btn:hover {
+    background: linear-gradient(135deg, #3a8e92 0%, #2a7d81 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(76, 159, 163, 0.35);
+}
+
+.view-btn::after {
+    content: "→";
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.view-btn:hover::after {
+    transform: translateX(4px);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #f7f7f7 0%, #ebebeb 100%);
     color: #5a6b6d;
     border: none;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  }
-  
-  .delete-btn:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .no-albums {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.delete-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0) 100%);
+    transition: all 0.6s ease;
+}
+
+.delete-btn:hover::before {
+    left: 100%;
+}
+
+.delete-btn:hover {
+    background: var(--error-color);
+    transform: translateY(-2px);
+    color: #485b5d;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.no-albums {
     text-align: center;
-    padding: 3rem;
+    padding: 4rem 2rem;
     color: #5f7173;
     font-style: italic;
-    background-color: #f8fbfb;
-    border-radius: 10px;
-    border: 1px dashed #d5e5e7;
-  }
-  
-  .loading {
+    background: linear-gradient(135deg, #f8fbfb 0%, #f0f7f8 100%);
+    border-radius: 16px;
+    border: 2px dashed #c5e0e3;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.no-albums::before {
+    content: "📷";
+    display: block;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+}
+
+.no-albums:hover {
+    border-color: #4c9fa3;
+    transform: scale(1.02);
+}
+
+.loading {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 200px;
     color: #4c9fa3;
     font-size: 1.1rem;
-  }
-  
-  .error {
-    background-color: #feeaea;
+    position: relative;
+}
+
+.loading::after {
+    content: "";
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(76, 159, 163, 0.3);
+    border-radius: 50%;
+    border-top-color: #4c9fa3;
+    animation: loader-spin 1s ease-in-out infinite;
+    margin-left: 10px;
+}
+
+@keyframes loader-spin {
+    to { transform: rotate(360deg); }
+}
+
+.error {
+    background: linear-gradient(135deg, #feeaea 0%, #fde5e5 100%);
     color: #d85a5a;
-    padding: 1rem;
-    border-radius: 8px;
-    border: 1px solid #fcd2d2;
+    padding: 1.5rem;
+    border-radius: 12px;
+    border-left: 5px solid #d85a5a;
     text-align: center;
-  }
+    position: relative;
+    box-shadow: 0 5px 15px rgba(216, 90, 90, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error::before {
+    content: "⚠️";
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Polaroid photo effect for albums with images */
+.album-card.with-image {
+    padding-top: 180px;
+}
+
+.album-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+    transition: transform 0.5s ease;
+}
+
+.album-container:hover .album-image {
+    transform: scale(1.05);
+}
+
+.album-details {
+    animation: fadeIn 0.4s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .albums-grid {
+        gap: 1.5rem;
+    }
+    
+    .album-card {
+        padding: 1.5rem;
+    }
+    
+    .albums-container h2 {
+        font-size: 1.8rem;
+    }
+}
+
+/* Cool hover interactions */
+.album-card:nth-child(odd):hover {
+    transform: translateY(-12px) rotate(1deg);
+}
+
+.album-card:nth-child(even):hover {
+    transform: translateY(-12px) rotate(-1deg);
+}
+
+/* Optional animation for cards on page load */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.album-card {
+    animation: fadeInUp 0.6s ease backwards;
+}
+
+.album-card:nth-child(1) { animation-delay: 0.1s; }
+.album-card:nth-child(2) { animation-delay: 0.2s; }
+.album-card:nth-child(3) { animation-delay: 0.3s; }
+.album-card:nth-child(4) { animation-delay: 0.4s; }
+.album-card:nth-child(5) { animation-delay: 0.5s; }
+.album-card:nth-child(6) { animation-delay: 0.6s; }
+
+/* Custom scrollbar for the container if needed */
+.albums-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.albums-container::-webkit-scrollbar-track {
+    background: #f0f7f8;
+    border-radius: 10px;
+}
+
+.albums-container::-webkit-scrollbar-thumb {
+    background: #4c9fa3;
+    border-radius: 10px;
+}
+
+.albums-container::-webkit-scrollbar-thumb:hover {
+    background: #3a8e92;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

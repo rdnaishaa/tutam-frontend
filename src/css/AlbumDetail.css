@@ -32,6 +32,8 @@ body {
   box-shadow: var(--card-shadow);
   overflow: hidden;
   transition: all 0.3s ease;
+  position: relative;
+  background: linear-gradient(to bottom right, #ffffff, #f8fafc);
 }
 
 .album-detail:hover {
@@ -39,13 +41,37 @@ body {
   transform: translateY(-5px);
 }
 
+.album-detail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.album-detail:hover::before {
+  opacity: 1;
+}
+
 .album-detail-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark), var(--success-color));
+  background-size: 200% 200%;
+  animation: gradientMove 15s ease infinite;
   color: white;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .back-btn {
@@ -60,6 +86,13 @@ body {
   border-radius: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+  animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 .back-btn:hover {
@@ -83,6 +116,24 @@ body {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.edit-btn::after, .delete-btn::after, .toggle-btn::after, .save-btn::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: -100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: 0.5s;
+}
+
+.edit-btn:hover::after, .delete-btn:hover::after, 
+.toggle-btn:hover::after, .save-btn:hover::after {
+  left: 100%;
 }
 
 .edit-btn:before {
@@ -126,6 +177,12 @@ body {
   margin-bottom: 1rem;
   position: relative;
   padding-bottom: 0.75rem;
+  animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .album-info h2:after {
@@ -148,6 +205,14 @@ body {
   background-color: var(--gray-light);
   border-radius: 0.5rem;
   border-left: 4px solid var(--primary-color);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.description:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .album-meta {
@@ -155,9 +220,16 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  background-color: var(--gray-light);
+  background-color: rgba(241, 245, 249, 0.8);
   border-radius: 0.5rem;
   margin-top: 1.5rem;
+  animation: fadeIn 0.8s ease;
+  backdrop-filter: blur(10px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .album-meta p {
@@ -182,15 +254,6 @@ body {
   display: flex;
   align-items: center;
   font-weight: 500;
-}
-
-.status-toggle span:before {
-  content: "🔒";
-  margin-right: 0.5rem;
-}
-
-.status-toggle span:has(+ .toggle-btn:contains("Private")):before {
-  content: "🔓";
 }
 
 .toggle-btn {
@@ -236,6 +299,8 @@ body {
   outline: none;
   border-color: var(--primary-color);
   box-shadow: 0 0 0 3px var(--primary-light);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
 }
 
 .save-btn {
@@ -278,6 +343,7 @@ body {
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px var(--primary-light);
 }
 
 @keyframes spin {
@@ -305,8 +371,14 @@ body {
 /* Responsive styles */
 @media (max-width: 768px) {
   .album-detail {
-    margin: 1.5rem;
+    margin: 1rem;
     border-radius: 0.75rem;
+    animation: mobileSlideUp 0.5s ease;
+  }
+
+  @keyframes mobileSlideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
 
   .album-detail-header {

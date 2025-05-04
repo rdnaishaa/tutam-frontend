@@ -43,7 +43,7 @@ const Albums = () => {
 
   return (
     <div className="albums-container">
-      <h2>My Albums Collection</h2>
+      <h2>All Albums</h2>
       {albums.length === 0 ? (
         <p className="no-albums">No albums found. Create one!</p>
       ) : (
@@ -53,9 +53,7 @@ const Albums = () => {
               <h3>{album.name}</h3>
               <p>{album.description || 'No description'}</p>
               <div className="album-status">
-                Status: <span className={album.is_public ? "status-public" : "status-private"}>
-                  {album.is_public ? 'Public' : 'Private'}
-                </span>
+                Status: {album.is_public ? 'Public' : 'Private'}
               </div>
               <div className="album-actions">
                 <Link to={`/albums/${album.id}`} className="view-btn">View Details</Link>
