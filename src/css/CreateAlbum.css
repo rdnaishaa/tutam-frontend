@@ -1,0 +1,152 @@
+.create-album {
+    max-width: 700px;
+    margin: 2rem auto;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 2.5rem;
+    border: 1px solid #f0f7f8;
+  }
+  
+  .create-album h2 {
+    color: #3a6e7a;
+    margin-bottom: 1.8rem;
+    text-align: center;
+    border-bottom: 2px solid #e3f0f2;
+    padding-bottom: 0.75rem;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.8rem;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+    color: #2c5d68;
+    font-size: 1rem;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid #d5e5e7;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.25s ease;
+    color: #5f7173;
+    background-color: #fbfdfd;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #4c9fa3;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 159, 163, 0.1);
+    background-color: #fff;
+  }
+  
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: #a3b8bb;
+  }
+  
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+  }
+  
+  .cancel-btn, .submit-btn {
+    padding: 0.8rem 1.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-size: 1rem;
+  }
+  
+  .cancel-btn {
+    background-color: #f8fbfb;
+    border: 1px solid #e3eef0;
+    color: #5a6b6d;
+  }
+  
+  .cancel-btn:hover {
+    background-color: #edf4f5;
+    color: #2c5d68;
+  }
+  
+  .submit-btn {
+    background-color: #4c9fa3;
+    color: white;
+    border: none;
+    box-shadow: 0 2px 5px rgba(76, 159, 163, 0.2);
+  }
+  
+  .submit-btn:hover {
+    background-color: #3a8e92;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 7px rgba(76, 159, 163, 0.25);
+  }
+  
+  .submit-btn:disabled {
+    background-color: #a0cfcf;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  
+  .error-message {
+    background-color: #feeaea;
+    color: #d85a5a;
+    padding: 1rem 1.2rem;
+    border-radius: 6px;
+    margin-bottom: 1.8rem;
+    border-left: 4px solid #d85a5a;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.5;
+  }
+  
+  .checkbox-group {
+    margin-top: 1.5rem;
+  }
+  
+  .checkbox-container {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .checkbox-container input[type="checkbox"] {
+    width: auto;
+    margin-right: 10px;
+    width: 18px;
+    height: 18px;
+    accent-color: #4c9fa3;
+  }
+  
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #2c5d68;
+    margin-bottom: 0.3rem;
+  }
+  
+  .checkbox-hint {
+    font-size: 0.85rem;
+    color: #7a9195;
+    margin-left: 28px;
+  }
